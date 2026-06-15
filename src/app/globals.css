@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme {
+  /* Z2 Concept Design Tokens */
+  --color-primary: #8B7E3D;
+  --color-accent: #F4A261;
+  --color-accent-dark: #E76F51;
+  --color-background: #FDF8F0;
+  --color-ink: #0C0608;
+  --color-white: #FFFFFF;
+
+  /* Typography Mapping */
+  --font-sans: "Bricolage Grotesque", sans-serif;
+  --font-serif: "Cormorant Garamond", serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  html, body { overflow-x: clip; width: 100dvw; }
+
+  /* Nuclear Font Lock: Bricolage Grotesque */
+  *, ::before, ::after {
+    font-family: var(--font-sans) !important;
+  }
+
+  body {
+    @apply bg-background text-ink antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans) !important;
+    @apply font-bold tracking-tight;
+  }
+}
+
+/* Protected Editorial Class */
+.font-serif-italic {
+  font-family: var(--font-serif) !important;
+  font-style: italic !important;
+}
+
+.btn-pill {
+  @apply px-8 py-3 rounded-full font-bold uppercase tracking-widest text-[10px] transition-all duration-300 flex items-center gap-2;
+}
