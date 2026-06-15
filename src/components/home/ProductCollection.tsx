@@ -5,12 +5,11 @@ import { ShoppingBag } from "lucide-react";
 import { getWooProducts } from "@/lib/woocommerce";
 import Reveal from "@/components/shared/Reveal";
 
-// Fallback high-fidelity mock data if WooCommerce API is not connected yet
 const fallbackProducts = [
-  { id: "1", name: "Classic Walnut Frame", price: "25,000", permalink: "/store", images: [{ src: "https://res.cloudinary.com/dwbjb3svx/image/upload/v1776180088/blog_assets/xqie8to9cmdxjiaom0tm.png" }] },
-  { id: "2", name: "Premium Matte Black Frame", price: "18,500", permalink: "/store", images: [{ src: "https://res.cloudinary.com/dwbjb3svx/image/upload/v1776180088/blog_assets/xqie8to9cmdxjiaom0tm.png" }] },
-  { id: "3", name: "Luxury Gilded Gold Frame", price: "32,000", permalink: "/store", images: [{ src: "https://res.cloudinary.com/dwbjb3svx/image/upload/v1776180088/blog_assets/xqie8to9cmdxjiaom0tm.png" }] },
-  { id: "4", name: "Minimalist Birch Frame", price: "15,000", permalink: "/store", images: [{ src: "https://res.cloudinary.com/dwbjb3svx/image/upload/v1776180088/blog_assets/xqie8to9cmdxjiaom0tm.png" }] }
+  { id: "1", name: "Classic Walnut Frame", price: "25,000", permalink: "/store", images: [{ src: "https://res.cloudinary.com/dwbjb3svx/image/upload/v1781521130/blog_assets/dsitt1fhtiod9dkndedz.png" }] },
+  { id: "2", name: "Premium Matte Black Frame", price: "18,500", permalink: "/store", images: [{ src: "https://res.cloudinary.com/dwbjb3svx/image/upload/v1781521130/blog_assets/dsitt1fhtiod9dkndedz.png" }] },
+  { id: "3", name: "Luxury Gilded Gold Frame", price: "32,000", permalink: "/store", images: [{ src: "https://res.cloudinary.com/dwbjb3svx/image/upload/v1781521130/blog_assets/dsitt1fhtiod9dkndedz.png" }] },
+  { id: "4", name: "Minimalist Birch Frame", price: "15,000", permalink: "/store", images: [{ src: "https://res.cloudinary.com/dwbjb3svx/image/upload/v1781521130/blog_assets/dsitt1fhtiod9dkndedz.png" }] }
 ];
 
 export default async function ProductCollection() {
@@ -34,10 +33,10 @@ export default async function ProductCollection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {displayProducts.map((product: any) => (
             <Reveal key={product.id}>
-              <div className="bg-white rounded-3xl overflow-hidden border border-ink/5 hover:shadow-xl transition-all duration-300 flex flex-col h-full justify-between">
+              <div className="bg-white rounded-[32px] overflow-hidden border border-ink/5 hover:shadow-xl transition-all duration-300 flex flex-col h-full justify-between">
                 <div className="relative aspect-square w-full">
                   <Image 
-                    src={product.images?.[0]?.src || "https://res.cloudinary.com/dwbjb3svx/image/upload/v1776180088/blog_assets/xqie8to9cmdxjiaom0tm.png"}
+                    src={product.images?.[0]?.src || "https://res.cloudinary.com/dwbjb3svx/image/upload/v1781521130/blog_assets/dsitt1fhtiod9dkndedz.png"}
                     alt={product.name}
                     fill
                     className="object-cover"
@@ -45,7 +44,7 @@ export default async function ProductCollection() {
                 </div>
                 <div className="p-6 flex items-center justify-between">
                   <div>
-                    <h3 className="text-sm font-bold text-ink uppercase">{product.name}</h3>
+                    <h3 className="text-xs font-black text-ink uppercase tracking-wide">{product.name}</h3>
                     <p className="text-primary font-bold text-xs mt-1">₦{product.price}</p>
                   </div>
                   <Link 

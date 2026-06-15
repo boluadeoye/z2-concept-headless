@@ -1,68 +1,118 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Reveal from "@/components/shared/Reveal";
 
-export default function Hero() {
-  return (
-    <div className="relative min-h-[90vh] flex flex-col justify-between bg-black overflow-hidden">
-      
-      {/* Background Image Layer */}
-      <div 
-        className="absolute inset-0 bg-cover bg-[center_25%] opacity-60 pointer-events-none"
-        style={{ backgroundImage: "url('https://res.cloudinary.com/dwbjb3svx/image/upload/v1776180088/blog_assets/xqie8to9cmdxjiaom0tm.png')" }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/80 pointer-events-none" />
+const slides = [
+  {
+    image: "https://res.cloudinary.com/dwbjb3svx/image/upload/v1781521102/blog_assets/skw6qc5r8hu7ajzgmuxh.png",
+    heading: "Transform Your Brand with Creative Design & Print Solutions",
+    subtext: "We bring your vision to life through exceptional branding, innovative design, and high-quality printing services."
+  },
+  {
+    image: "https://res.cloudinary.com/dwbjb3svx/image/upload/v1781521130/blog_assets/dsitt1fhtiod9dkndedz.png",
+    heading: "Handcrafted Frames & High-End Gallery Printing",
+    subtext: "Elevate your visual memories into physical works of art with our master-grade custom framing solutions."
+  }
+];
 
-      {/* Hero Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 flex-1 flex flex-col justify-center items-center text-center mt-24">
+export default function Hero() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 8000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handlePrev = () => {
+    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  const handleNext = () => {
+    setCurrent((prev) => (prev + 1) % slides.length);
+  };
+
+  return (
+    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">
+      
+      {/* Background Slides with Cross-Fade */}
+      {slides.map((slide, idx) => (
+        <div
+          key={idx}
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            idx === current ? "opacity-70" : "opacity-0"
+          }`}
+        >
+          <Image 
+            src={slide.image}
+            alt="Z2 Concept Hero Background"
+            fill
+            priority={idx === 0}
+            className="object-cover object-center"
+          />
+        </div>
+      ))}
+      <div className="absolute inset-0 bg-black/40 z-0" />
+
+      {/* Content Container */}
+      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center text-white">
         <Reveal>
-          <h1 className="text-4xl md:text-7xl font-bold text-white max-w-5xl leading-[1.1] mb-8 uppercase">
-            Transform Your Brand with <br />
-            <span className="font-serif-italic text-accent normal-case">Creative</span> Design & Print Solutions
+          <h1 className="text-4xl md:text-7xl font-bold leading-[1.1] mb-8 tracking-tight uppercase">
+            {slides[current].heading}
           </h1>
-          <p className="text-white/80 text-sm md:text-lg max-w-2xl mx-auto mb-12 font-medium">
-            We are your creative partner, delivering exquisite photography, video production, digital systems, and elite packaging elements.
+          <p className="text-white/90 text-sm md:text-lg max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
+            {slides[current].subtext}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/contact" className="btn-pill bg-accent text-white hover:bg-accent-dark w-full sm:w-auto justify-center">
-              Contact Us <ArrowUpRight size={12} />
+            <Link 
+              href="/contact" 
+              className="w-full sm:w-48 bg-black text-white py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all border border-black text-center"
+            >
+              Contact Us
             </Link>
-            <Link href="/services" className="btn-pill border border-white/20 text-white hover:bg-white/5 w-full sm:w-auto justify-center">
-              Our Services
+            <Link 
+              href="/portfolio" 
+              className="w-full sm:w-48 bg-transparent border border-white/60 text-white py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-all text-center"
+            >
+              View Our Work
             </Link>
           </div>
         </Reveal>
       </div>
 
-      {/* Infinite Services Ticker */}
-      <div className="relative z-10 bg-primary/90 backdrop-blur-sm border-t border-white/10 py-6 overflow-hidden">
-        <div className="flex whitespace-nowrap animate-marquee">
-          {[1, 2, 3].map((cycle) => (
-            <div key={cycle} className="flex gap-12 items-center text-white font-bold text-xs uppercase tracking-[0.3em] pr-12">
-              <span>Video Production</span> <span className="text-accent">•</span>
-              <span>Website Development</span> <span className="text-accent">•</span>
-              <span>Graphic Design</span> <span className="text-accent">•</span>
-              <span>AI Content Creation</span> <span className="text-accent">•</span>
-              <span>Photography</span> <span className="text-accent">•</span>
-            </div>
-          ))}
-        </div>
+      {/* Slider Navigation Arrows */}
+      <div className="absolute inset-x-6 md:inset-x-12 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none z-20">
+        <button 
+          onClick={handlePrev}
+          className="w-12 h-12 rounded-full border border-white/20 bg-white/10 backdrop-blur-md flex items-center justify-center text-white pointer-events-auto hover:bg-white hover:text-black transition-all"
+        >
+          <ChevronLeft size={24} />
+        </button>
+        <button 
+          onClick={handleNext}
+          className="w-12 h-12 rounded-full border border-white/20 bg-white/10 backdrop-blur-md flex items-center justify-center text-white pointer-events-auto hover:bg-white hover:text-black transition-all"
+        >
+          <ChevronRight size={24} />
+        </button>
       </div>
 
-      <style jsx global>{`
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-33.33%); }
-        }
-        .animate-marquee {
-          display: flex;
-          width: max-content;
-          animation: marquee 25s linear infinite;
-        }
-      `}</style>
-    </div>
+      {/* Pagination Bar/Dots */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-3 z-20 items-center">
+        {slides.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrent(idx)}
+            className={`transition-all duration-300 rounded-full ${
+              idx === current ? "w-8 h-1.5 bg-accent" : "w-1.5 h-1.5 bg-white/40"
+            }`}
+          />
+        ))}
+      </div>
+    </section>
   );
 }

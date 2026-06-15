@@ -12,7 +12,7 @@ export default function AboutSection() {
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           
-          {/* Text Left */}
+          {/* Left Text Column */}
           <div>
             <Reveal>
               <div className="flex gap-4 mb-8">
@@ -34,7 +34,7 @@ export default function AboutSection() {
                 </button>
               </div>
 
-              <h2 className="text-3xl md:text-5xl font-bold text-ink mb-8 leading-tight">
+              <h2 className="text-3xl md:text-5xl font-bold text-ink mb-8 leading-tight uppercase">
                 {activeTab === "company" 
                   ? "Kefee Home Productions and its creative division, Z2 Concepts"
                   : "Visionary leadership crafting digital experiences & elite prints"
@@ -61,13 +61,12 @@ export default function AboutSection() {
             </Reveal>
           </div>
 
-          {/* Image Right */}
-          <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl">
+          {/* Right Image Column (Figma Pillar Asset) */}
+          <div className="relative aspect-[3/4] rounded-[36px] overflow-hidden shadow-2xl border border-ink/5">
             <Image 
-              src="https://res.cloudinary.com/dwbjb3svx/image/upload/v1776180088/blog_assets/xqie8to9cmdxjiaom0tm.png"
-              alt="Editorial Profile"
+              src="https://res.cloudinary.com/dwbjb3svx/image/upload/v1781521104/blog_assets/uhkj4l7sck5mdfvfbrpq.png"
+              alt="Vertical Editorial Couple Portrait"
               fill
-              priority
               className="object-cover"
             />
           </div>
