@@ -1,24 +1,47 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ShoppingBag, Search, Menu, X, ArrowUpRight } from "lucide-react";
 
-export default function Navbar() {
+interface NavbarProps {
+  variant?: "transparent" | "solid";
+}
+
+export default function Navbar({ variant = "transparent" }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const isTransparent = variant === "transparent" && !scrolled;
+
+  const navClasses = isTransparent
+    ? "absolute top-0 left-0 right-0 z-50 bg-transparent text-white"
+    : "fixed top-0 left-0 right-0 z-50 bg-ink/95 backdrop-blur-md text-white border-b border-white/5 transition-all duration-300";
 
   return (
-    <nav className="absolute top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-[2px] text-white border-b border-white/10">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 h-24 flex items-center justify-between">
+    <nav className={`${navClasses} transition-all duration-300`}>
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 h-20 md:h-24 flex items-center justify-between">
         
-        {/* Brand Logo */}
+        {/* Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0 group">
-          <span className="text-3xl font-black text-primary tracking-tighter transition-transform group-hover:scale-105">Z2</span>
+          <span className="text-2xl md:text-3xl font-black text-primary tracking-tighter transition-transform group-hover:scale-105">Z2</span>
           <span className="text-[10px] uppercase tracking-[0.3em] text-white font-bold pt-1">
             CONCEPT X KEFEE HP
           </span>
         </Link>
 
-        {/* Desktop Links with Custom Indicators */}
+        {/* Links */}
         <div className="hidden lg:flex items-center gap-8">
           {[
             { name: "Home", href: "/" },
@@ -39,7 +62,7 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Actions & Pill Button */}
+        {/* Actions */}
         <div className="flex items-center gap-6">
           <div className="hidden md:flex items-center gap-4">
             <Link 
@@ -68,9 +91,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden absolute top-24 left-0 right-0 bg-ink border-b border-white/10 p-8 flex flex-col gap-8 z-50">
+        <div className="lg:hidden absolute top-20 left-0 right-0 bg-ink border-b border-white/10 p-8 flex flex-col gap-8 z-50">
           {[
             { name: "Home", href: "/" },
             { name: "About", href: "/about" },
